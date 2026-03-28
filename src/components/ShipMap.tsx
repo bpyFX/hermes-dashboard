@@ -380,7 +380,7 @@ export const ShipMap = () => {
 
   return (
     <div ref={containerRef} style={{
-      flex: 1, minHeight: 0, position: 'relative',
+      width: '100%', height: '100%', position: 'relative',
       background: 'var(--bg)', overflow: 'hidden',
     }}>
       <canvas
