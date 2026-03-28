@@ -9,30 +9,26 @@ import { TracePanel } from './components/TracePanel'
 function App() {
   return (
     <div style={{
-      width: '100vw',
-      height: '100vh',
+      width: '100%',
+      height: '100%',
       background: 'var(--bg)',
       display: 'flex',
       flexDirection: 'column',
       overflow: 'hidden',
     }}>
-      {/* Topbar — full width */}
       <div style={{ flexShrink: 0, height: 26 }}>
         <Topbar />
       </div>
-
-      {/* Main grid — 162px | 1fr | 224px */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: '162px 1fr 224px',
-        height: 660,
+        flex: 1,
+        minHeight: 0,
+        width: '100%',
         overflow: 'hidden',
       }}>
-        {/* Left: Sidebar */}
         <Sidebar />
-
-        {/* Center: vertical stack */}
-        <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0, minWidth: 0 }}>
           <div style={{ flexShrink: 0, height: 132 }}>
             <Fishtank />
           </div>
@@ -46,8 +42,6 @@ function App() {
             <InputBar />
           </div>
         </div>
-
-        {/* Right: TracePanel */}
         <TracePanel />
       </div>
     </div>
