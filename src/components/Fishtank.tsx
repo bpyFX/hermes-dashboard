@@ -1,0 +1,1 @@
+export const Fishtank = () => <div className="fishtank"></div>

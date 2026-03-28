@@ -1,0 +1,1 @@
+export const InputBar = () => <div className="input-bar"></div>

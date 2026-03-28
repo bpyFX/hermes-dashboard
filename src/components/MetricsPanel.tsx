@@ -1,0 +1,1 @@
+export const MetricsPanel = () => <div className="metrics-panel"></div>

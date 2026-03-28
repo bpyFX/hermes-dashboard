@@ -1,0 +1,1 @@
+export const Topbar = () => <div className="topbar"></div>

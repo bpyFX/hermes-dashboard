@@ -1,0 +1,1 @@
+export const TracePanel = () => <div className="trace-panel"></div>

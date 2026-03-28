@@ -1,0 +1,1 @@
+export const CommsLog = () => <div className="comms-log"></div>

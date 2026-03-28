@@ -1,0 +1,1 @@
+export const ShipMap = () => <div className="ship-map"></div>
