@@ -1,8 +1,25 @@
 :root {
+  /* Dashboard palette */
+  --c: #9b8fd4;
+  --cbright: #c5bcf0;
+  --cwhite: #e8e4f5;
+  --cdim: #7a7590;
+  --cvdim: #4a4760;
+  --cvvdim: #2e2c3d;
+  --teal: #5dbb9a;
+  --tealdim: #3a7a65;
+  --amber: #f0a500;
+  --green: #5dbb7a;
+  --red: #e05566;
+  --purple: #9b8fd4;
+  --bg: #02090f;
+  --bg2: #050d14;
+  --border: #0f1e2a;
+
+  /* Legacy */
   --text: #6b6375;
   --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
+  --border-light: #e5e4e7;
   --code-bg: #f4f3ec;
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
