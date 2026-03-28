@@ -17,6 +17,12 @@
   --bg: #02090f;
   --bg2: #050d14;
   --border: #0f1e2a;
+  --border-subtle: rgba(127, 184, 216, 0.05);
+  --c-border: rgba(155, 143, 212, 0.3);
+  --c-hover: rgba(155, 143, 212, 0.22);
+  --c-dim-bg: rgba(155, 143, 212, 0.15);
+  --teal-shadow: rgba(93, 187, 154, 0.18);
+  --border-overlay: rgba(15, 30, 42, 0.7);
   --shipmap-dot-grid: radial-gradient(circle, rgba(155,143,212,0.1) 1px, transparent 1px);
 }
 
@@ -96,9 +102,9 @@ body {
   align-items: center;
   padding: 0 10px;
   background:
-    linear-gradient(180deg, #050d14, var(--bg2));
+    linear-gradient(180deg, var(--bg2), var(--bg2));
   border-bottom: 1px solid var(--border);
-  box-shadow: inset 0 -1px 0 rgba(93, 187, 154, 0.18);
+  box-shadow: inset 0 -1px 0 var(--teal-shadow);
 }
 
 .app-body {
@@ -130,8 +136,8 @@ body {
       180deg,
       transparent 0,
       transparent 23px,
-      rgba(15, 30, 42, 0.7) 23px,
-      rgba(15, 30, 42, 0.7) 24px
+      var(--border-overlay) 23px,
+      var(--border-overlay) 24px
     );
 }
 
