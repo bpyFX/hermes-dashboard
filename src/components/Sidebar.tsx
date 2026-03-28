@@ -126,7 +126,7 @@ export const Sidebar = () => (
 
       .sidebar__row {
         padding: 4px 8px;
-        border-bottom: 1px solid rgba(127, 184, 216, 0.05);
+        border-bottom: 1px solid var(--border-subtle);
         display: flex;
         align-items: center;
         gap: 5px;
@@ -137,7 +137,7 @@ export const Sidebar = () => (
       }
 
       .sidebar__row:hover {
-        background: rgba(127, 184, 216, 0.04);
+        background: var(--border-subtle);
       }
 
       .sidebar__row--active {

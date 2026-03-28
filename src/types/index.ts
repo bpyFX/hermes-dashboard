@@ -35,7 +35,6 @@ export interface Session {
   cost: number
   status: 'active' | 'queued' | 'done'
 }
-
 export interface MetricsPanelProps {
   tasks?: number
   running?: number
