@@ -1,4 +1,4 @@
-import { TraceEntry } from '../types/index'
+import type { TraceEntry } from '../types/index'
 
 const SAMPLE_TRACES: TraceEntry[] = [
   { id:'t1',  type:'info',    content:'Session initialized · agent HERMES-1 online',              timestamp: Date.now()-92000 },
