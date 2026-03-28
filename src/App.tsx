@@ -8,41 +8,31 @@ import { TracePanel } from './components/TracePanel'
 
 function App() {
   return (
-    <div style={{
-      width: '100%',
-      height: '100%',
-      background: 'var(--bg)',
-      display: 'flex',
-      flexDirection: 'column',
-      overflow: 'hidden',
-    }}>
-      <div style={{ flexShrink: 0, height: 26 }}>
+    <div className="app-shell">
+      <div className="app-topbar">
         <Topbar />
       </div>
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '162px 1fr 224px',
-        flex: 1,
-        minHeight: 0,
-        width: '100%',
-        overflow: 'hidden',
-      }}>
-        <Sidebar />
-        <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0, minWidth: 0 }}>
-          <div style={{ flexShrink: 0, height: 132 }}>
+      <div className="app-body">
+        <div className="app-sidebar">
+          <Sidebar />
+        </div>
+        <div className="app-center">
+          <div className="app-fishtank">
             <Fishtank />
           </div>
-          <div style={{ flex: 1, minHeight: 0 }}>
+          <div className="app-shipmap">
             <ShipMap />
           </div>
-          <div style={{ flexShrink: 0, height: 130 }}>
+          <div className="app-commslog">
             <CommsLog />
           </div>
-          <div style={{ flexShrink: 0, height: 44 }}>
+          <div className="app-inputbar">
             <InputBar />
           </div>
         </div>
-        <TracePanel />
+        <div className="app-tracepanel">
+          <TracePanel />
+        </div>
       </div>
     </div>
   )
