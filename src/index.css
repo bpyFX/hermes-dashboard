@@ -25,6 +25,7 @@
   --red: #e05566;
   --purple: #9b8fd4;
   --bg2: #050d14;
+  --shipmap-dot-grid: radial-gradient(circle, rgba(155,143,212,0.1) 1px, transparent 1px);
 }
 
 @keyframes blink {

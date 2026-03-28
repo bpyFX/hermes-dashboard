@@ -81,8 +81,7 @@ export const ShipMap = () => {
         background: 'var(--bg)',
         overflow: 'hidden',
         position: 'relative',
-        backgroundImage:
-          'radial-gradient(circle, rgba(155,143,212,0.1) 1px, transparent 1px)',
+        backgroundImage: 'var(--shipmap-dot-grid)',
         backgroundSize: '16px 16px',
       }}
     >
