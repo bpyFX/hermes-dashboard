@@ -81,8 +81,13 @@ export const ShipMap = () => {
 
     // ── Resize observer ───────────────────────────────────────────────────
     const resize = () => {
-      canvas.width  = container.clientWidth
-      canvas.height = container.clientHeight
+      const dpr = window.devicePixelRatio || 1
+      const w   = container.clientWidth
+      const h   = container.clientHeight
+      canvas.width  = w * dpr
+      canvas.height = h * dpr
+      canvas.style.width  = w + 'px'
+      canvas.style.height = h + 'px'
     }
     resize()
     const ro = new ResizeObserver(resize)
@@ -109,24 +114,26 @@ export const ShipMap = () => {
       const ctx = canvas.getContext('2d')
       if (!ctx) { rafRef.current = requestAnimationFrame(frame); return }
 
-      const W  = canvas.width
-      const H  = canvas.height
-      const sx = W / 600
-      const sy = H / 460
-      const tick = tickRef.current++
+      const dpr     = window.devicePixelRatio || 1
+      const W       = canvas.width
+      const H       = canvas.height
+      const offsetX = (W / dpr - 600) / 2
+      const offsetY = (H / dpr - 460) / 2
+      const tick    = tickRef.current++
 
-      ctx.clearRect(0, 0, W, H)
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      ctx.clearRect(0, 0, W / dpr, H / dpr)
 
       // ── Corridors ──────────────────────────────────────────────────────
       const bc  = roomCenter(bridge)
-      const bcx = bc.x * sx
-      const bcy = bc.y * sy
+      const bcx = bc.x + offsetX
+      const bcy = bc.y + offsetY
 
       for (const room of ROOMS) {
         if (room.isHub) continue
         const rc  = roomCenter(room)
-        const rcx = rc.x * sx
-        const rcy = rc.y * sy
+        const rcx = rc.x + offsetX
+        const rcy = rc.y + offsetY
         const dx  = bcx - rcx
         const dy  = bcy - rcy
         const len = Math.sqrt(dx * dx + dy * dy)
@@ -159,10 +166,10 @@ export const ShipMap = () => {
       // ── Rooms ──────────────────────────────────────────────────────────
       for (const room of ROOMS) {
         const col        = ROOM_COLORS[room.id]
-        const rx         = room.x * sx
-        const ry         = room.y * sy
-        const rw         = room.w * sx
-        const rh         = room.h * sy
+        const rx         = room.x + offsetX
+        const ry         = room.y + offsetY
+        const rw         = room.w
+        const rh         = room.h
         const cx         = rx + rw / 2
         const cy         = ry + rh / 2
         const isSelected = selectedRef.current === room.id
@@ -209,12 +216,12 @@ export const ShipMap = () => {
 
         // File modules
         if (hasFiles) {
-          const modW    = Math.min(26 * sx, (rw - 10 * sx) / room.files.length - 2 * sx)
-          const modH    = 10 * sy
-          const gap     = 2 * sx
+          const modW    = Math.min(26, (rw - 10) / room.files.length - 2)
+          const modH    = 10
+          const gap     = 2
           const totalW  = room.files.length * modW + (room.files.length - 1) * gap
           let   mx      = cx - totalW / 2
-          const my      = ry + rh - modH - 5 * sy
+          const my      = ry + rh - modH - 5
           const hasAgent = agentsRef.current.some(
             a => a.room === room.id && a.phase === 'working',
           )
@@ -272,7 +279,7 @@ export const ShipMap = () => {
         }
 
         // Push to trail before lerp
-        agent.trail.push({ x: agent.x * sx, y: agent.y * sy })
+        agent.trail.push({ x: agent.x + offsetX, y: agent.y + offsetY })
         if (agent.trail.length > 14) agent.trail.shift()
 
         // Smooth lerp
@@ -280,8 +287,8 @@ export const ShipMap = () => {
         agent.y += (agent.ty - agent.y) * 0.07
         agent.spinAngle += 0.08
 
-        const ax = agent.x * sx
-        const ay = agent.y * sy
+        const ax = agent.x + offsetX
+        const ay = agent.y + offsetY
 
         // Trail dots
         for (let i = 0; i < agent.trail.length; i++) {
@@ -349,18 +356,17 @@ export const ShipMap = () => {
   const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current
     if (!canvas) return
-    const rect = canvas.getBoundingClientRect()
-    // Account for CSS vs canvas pixel ratio
-    const mx = (e.clientX - rect.left) * (canvas.width  / rect.width)
-    const my = (e.clientY - rect.top)  * (canvas.height / rect.height)
-    const sx = canvas.width  / 600
-    const sy = canvas.height / 460
+    const rect    = canvas.getBoundingClientRect()
+    const mx      = e.clientX - rect.left
+    const my      = e.clientY - rect.top
+    const offsetX = (rect.width  - 600) / 2
+    const offsetY = (rect.height - 460) / 2
 
     let hit: string | null = null
     for (const room of ROOMS) {
       if (
-        mx >= room.x * sx && mx <= (room.x + room.w) * sx &&
-        my >= room.y * sy && my <= (room.y + room.h) * sy
+        mx >= room.x + offsetX && mx <= room.x + room.w + offsetX &&
+        my >= room.y + offsetY && my <= room.y + room.h + offsetY
       ) { hit = room.id; break }
     }
 
