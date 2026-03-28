@@ -1,14 +1,14 @@
 const AGENT_ROWS = [
-  { id: 'CC', color: '#9b8fd4', pulse: true,  delay: '0s'    },
-  { id: 'CX', color: '#5dbb7a', pulse: true,  delay: '0.4s'  },
-  { id: 'OC', color: '#f0a500', pulse: false, delay: ''       },
-  { id: 'GM', color: '#e05566', pulse: false, delay: ''       },
+  { id: 'CC', color: 'var(--agent-cc)', pulse: true,  delay: '0s'    },
+  { id: 'CX', color: 'var(--agent-cx)', pulse: true,  delay: '0.4s'  },
+  { id: 'OC', color: 'var(--agent-oc)', pulse: false, delay: ''       },
+  { id: 'GM', color: 'var(--agent-gm)', pulse: false, delay: ''       },
 ]
 
 export const Fishtank = () => (
   <div style={{
     height: '132px',
-    background: '#02090f',
+    background: 'var(--fishtank-bg)',
     borderBottom: '1px solid var(--border)',
     display: 'flex',
     overflow: 'hidden',
@@ -52,14 +52,14 @@ export const Fishtank = () => (
     {/* Dot grid overlay */}
     <div style={{
       position: 'absolute', inset: 0, pointerEvents: 'none',
-      backgroundImage: 'radial-gradient(circle, rgba(155,143,212,0.14) 1px, transparent 1px)',
+      backgroundImage: 'var(--shipmap-dot-grid)',
       backgroundSize: '12px 12px',
     }} />
 
     {/* Scanline sweep */}
     <div style={{
       position: 'absolute', left: 0, right: 0, height: '32px', pointerEvents: 'none', zIndex: 2,
-      background: 'linear-gradient(to bottom, transparent, rgba(93,187,154,0.04), transparent)',
+      background: 'linear-gradient(to bottom, transparent, var(--scanline-base), transparent)',
       animation: 'ft-scanline 7s linear infinite',
     }} />
 

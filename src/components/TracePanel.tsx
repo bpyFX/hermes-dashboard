@@ -42,7 +42,7 @@ const RESOURCE_BARS = [
   { label:'VRAM', pct:79, fill:'var(--amber)' },
   { label:'RAM',  pct:44, fill:'var(--teal)'  },
   { label:'CPU',  pct:21, fill:'var(--green)' },
-  { label:'CTX',  pct:12, fill:'#4a7dd4'      },
+  { label:'CTX',  pct:12, fill:'var(--resource-ctx-fill)' },
 ] as const
 
 export const TracePanel = () => (
@@ -69,7 +69,7 @@ export const TracePanel = () => (
           fontWeight: 600,
           letterSpacing: '0.5px',
           color:      i === 0 ? 'var(--cbright)' : 'var(--cvdim)',
-          background: i === 0 ? 'rgba(155,143,212,0.08)' : 'transparent',
+          background: i === 0 ? 'var(--active-tab-bg)' : 'transparent',
           cursor: 'pointer',
         }}>
           {tab}

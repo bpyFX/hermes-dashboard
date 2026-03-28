@@ -14,9 +14,18 @@
   --green: #5dbb7a;
   --red: #e05566;
   --purple: #9b8fd4;
+  --fishtank-bg: #02090f;
+  --agent-cc: #9b8fd4;
+  --agent-cx: #5dbb7a;
+  --agent-oc: #f0a500;
+  --agent-gm: #e05566;
   --bg: #02090f;
   --bg2: #050d14;
   --border: #0f1e2a;
+  --overlay-dot-base: rgba(155,143,212,0.14);
+  --scanline-base: rgba(93,187,154,0.04);
+  --resource-ctx-fill: #4a7dd4;
+  --active-tab-bg: rgba(155,143,212,0.08);
   --border-subtle: rgba(127, 184, 216, 0.05);
   --c-border: rgba(155, 143, 212, 0.3);
   --c-hover: rgba(155, 143, 212, 0.22);
