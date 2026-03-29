@@ -1,3 +1,6 @@
+import { useHermes } from '../hooks/useHermes'
+import { useSessionStore } from '../store/sessionStore'
+
 const sections = [
   {
     title: 'ACTIVE',
@@ -54,50 +57,74 @@ const sections = [
       },
     ],
   },
-  {
-    title: 'MEMORY',
-    rows: [
-      {
-        label: 'Skills',
-        dotColor: 'var(--teal)',
-        value: '47',
-      },
-      {
-        label: 'Memories',
-        dotColor: 'var(--teal)',
-        value: '312',
-      },
-      {
-        label: 'Sessions',
-        dotColor: 'var(--teal)',
-        value: '89',
-      },
-    ],
-  },
-  {
-    title: 'SYSTEM',
-    rows: [
-      {
-        label: 'Ollama',
-        dotColor: 'var(--green)',
-        value: 'OK',
-      },
-      {
-        label: 'WSL2',
-        dotColor: 'var(--green)',
-        value: 'OK',
-      },
-      {
-        label: 'GPU',
-        dotColor: 'var(--amber)',
-        value: '79%',
-      },
-    ],
-  },
 ] as const
 
-export const Sidebar = () => (
-  <>
+const formatRelativeTime = (value: string) => {
+  const time = new Date(value).getTime()
+  if (Number.isNaN(time)) {
+    return 'unknown'
+  }
+
+  const diffMs = time - Date.now()
+  const minuteMs = 60 * 1000
+  const hourMs = 60 * minuteMs
+  const dayMs = 24 * hourMs
+  const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
+
+  if (Math.abs(diffMs) >= dayMs) {
+    return rtf.format(Math.round(diffMs / dayMs), 'day')
+  }
+
+  if (Math.abs(diffMs) >= hourMs) {
+    return rtf.format(Math.round(diffMs / hourMs), 'hour')
+  }
+
+  return rtf.format(Math.round(diffMs / minuteMs), 'minute')
+}
+
+export const Sidebar = () => {
+  const { online, metrics } = useHermes()
+  const { sessions } = useSessionStore()
+
+  const recentSessions = [...sessions]
+    .sort((left, right) => new Date(right.updated).getTime() - new Date(left.updated).getTime())
+    .slice(0, 3)
+    .map((session) => ({
+      label: session.id,
+      dotColor: 'var(--teal)',
+      value: `${session.platform} · ${formatRelativeTime(session.updated)}`,
+    }))
+
+  const renderedSections = [
+    ...sections,
+    {
+      title: 'SESSIONS',
+      rows: recentSessions,
+    },
+    {
+      title: 'SYSTEM',
+      rows: [
+        {
+          label: 'Ollama',
+          dotColor: online ? 'var(--green)' : 'var(--red)',
+          value: online ? 'OK' : 'OFF',
+        },
+        {
+          label: 'WSL2',
+          dotColor: 'var(--green)',
+          value: 'OK',
+        },
+        {
+          label: 'GPU',
+          dotColor: 'var(--amber)',
+          value: `${metrics.gpu_util}%`,
+        },
+      ],
+    },
+  ]
+
+  return (
+    <>
     <style>{`
       .sidebar {
         width: 162px;
@@ -185,7 +212,7 @@ export const Sidebar = () => (
       }
     `}</style>
     <aside className="sidebar" aria-label="Agent navigation">
-      {sections.map((section) => (
+      {renderedSections.map((section) => (
         <section className="sidebar__section" key={section.title}>
           <div className="sidebar__header">{section.title}</div>
           {section.rows.map((row) => (
@@ -206,4 +233,5 @@ export const Sidebar = () => (
       ))}
     </aside>
   </>
-)
+  )
+}

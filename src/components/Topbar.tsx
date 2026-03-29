@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useHermes } from '../hooks/useHermes';
 
 export const Topbar = () => {
+  const { online, model, metrics, session_count } = useHermes();
   const [time, setTime] = useState(() => {
     const now = new Date();
     return now.toLocaleTimeString();
@@ -13,12 +15,12 @@ export const Topbar = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const displayModel = model.replace(/:latest$/, '').toUpperCase() || 'UNKNOWN';
   const roomsStatus = [
-    { label: 'ONLINE', color: 'var(--cbright)' },
-    { label: 'MDL:NEMOTRON-CASCADE-2', color: 'var(--purple)' },
-    { label: 'VRAM:79%', color: 'var(--amber)' },
-    { label: 'CTX:16.7K/262K', color: 'var(--teal)' },
-    { label: 'AGENTS:3', color: 'var(--green)' },
+    { label: online ? 'ONLINE' : 'OFFLINE', color: online ? 'var(--green)' : 'var(--red)' },
+    { label: `MDL:${displayModel}`, color: 'var(--purple)' },
+    { label: `VRAM:${metrics.vram}%`, color: 'var(--amber)' },
+    { label: `SESSIONS:${session_count}`, color: 'var(--green)' },
   ];
 
   return (
